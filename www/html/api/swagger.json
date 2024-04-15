@@ -640,6 +640,34 @@
                         "description": "Sale not found"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Delete a sale by its ID",
+                "description": "Deletes a sale from the database using its unique ID.",
+                "operationId": "cec4cd71a50a77f68ab3f5cfeedd1df7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The unique identifier of the sale to be deleted.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Sale deleted successfully"
+                    },
+                    "404": {
+                        "description": "Sale not found"
+                    }
+                }
             }
         }
     },

@@ -45,26 +45,26 @@ const AddSale = () => {
   };
 
   const handleKeyPress = (e) => {
-  if (e.key === 'Enter') {
-    const product = productSale.find(product => product.ean === barcode);
-    if (product) {
-      const itemIndex = cart.findIndex(item => item.product_id === product.id);
-      if (itemIndex !== -1) {
-        const updatedCart = [...cart];
-        updatedCart[itemIndex].quantity += parseInt(quantity);
-        setCart(updatedCart);
-      } else {
-        const item = {
-          quantity: parseInt(quantity), 
-          product_id: product.id
-        };
-        setCart([...cart, item]);
+    if (e.key === 'Enter') {
+      const product = productSale.find(product => product.ean === barcode);
+      if (product) {
+        const itemIndex = cart.findIndex(item => item.product_id === product.id);
+        if (itemIndex !== -1) {
+          const updatedCart = [...cart];
+          updatedCart[itemIndex].quantity += parseInt(quantity);
+          setCart(updatedCart);
+        } else {
+          const item = {
+            quantity: parseInt(quantity),
+            product_id: product.id
+          };
+          setCart([...cart, item]);
+        }
+        setBarcode('');
+        setQuantity(1);
       }
-      setBarcode('');
-      setQuantity(1);
     }
-  }
-};
+  };
 
 
   const getTotalPrice = () => {
@@ -88,12 +88,12 @@ const AddSale = () => {
       const changeValue = received - totalPrice;
       setChange(changeValue.toFixed(2));
       const productsObject = { products: cart };
-      createSale(productsObject) 
-      .then(() => {
-        toast.success("Venda Salva com sucesso");
-        clearScreen();
-      })
-      .catch(error => console.error('Error fetching products:', error));
+      createSale(productsObject)
+        .then(() => {
+          toast.success("Venda Salva com sucesso");
+          clearScreen();
+        })
+        .catch(error => console.error('Error fetching products:', error));
     } else {
       console.log(productSale)
       toast.warning("Valor insuficiente")
@@ -103,7 +103,7 @@ const AddSale = () => {
   const handleValueReceivedChange = (e) => {
     const receivedValue = e.target.value;
     setValueReceived(receivedValue);
-    
+
     if (!isNaN(receivedValue) && receivedValue !== '') {
       const totalPrice = getTotalPrice();
       const received = parseFloat(receivedValue);
@@ -130,16 +130,8 @@ const AddSale = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-4 border p-3 rounded">
-          <h3>Produtos</h3>
-          <input
-            type="text"
-            className="form-control mb-3"
-            placeholder="Scan barcode..."
-            value={barcode}
-            onChange={(e) => setBarcode(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
           <div className="mb-3">
+            <h3>Produtos</h3>
             <label htmlFor="quantity" className="form-label">Quantidade:</label>
             <div className="input-group">
               <button className="btn btn-outline-secondary" type="button" onClick={() => handleQuantityChange(-1)}>-</button>
@@ -154,6 +146,16 @@ const AddSale = () => {
               <button className="btn btn-outline-secondary" type="button" onClick={() => handleQuantityChange(1)}>+</button>
             </div>
           </div>
+          <label htmlFor="ean" className="form-label">Código de Barras:</label>
+          <input
+            type="text"
+            className="form-control mb-3"
+            placeholder="Scan barcode..."
+            value={barcode}
+            onChange={(e) => setBarcode(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+          <label htmlFor="example" className="form-label">*Para adicionar o produto ao carrinho selecione uma quantidade e um código de barras de produto cadastrado e aperte enter.</label>
         </div>
         <div className='col-md-8 border p-3 rounded'>
           <h3>Carrinho</h3>

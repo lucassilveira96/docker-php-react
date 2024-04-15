@@ -1,0 +1,830 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API PHP",
+        "description": "API of poducts, product_types and sales",
+        "contact": {
+            "email": "lucas.silva.silveira@rede.ulbra.br"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "operationId": "24d95d5370fe18893f4438d1f158438c",
+                "responses": {
+                    "200": {
+                        "description": "Returns a list of products",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create a new product",
+                "description": "Adds a new product to the database with the provided data.",
+                "operationId": "6f19f6a2f97102b09f64a082a70152e3",
+                "requestBody": {
+                    "description": "JSON payload",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "description",
+                                    "price",
+                                    "product_type"
+                                ],
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "example": "mouse"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150
+                                    },
+                                    "ean": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "AB12345678910"
+                                    },
+                                    "purchase_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 75
+                                    },
+                                    "sales_margin": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 100
+                                    },
+                                    "quantity": {
+                                        "type": "integer",
+                                        "format": "int64",
+                                        "example": 150
+                                    },
+                                    "minimum_quantity": {
+                                        "type": "integer",
+                                        "format": "int64",
+                                        "example": 10
+                                    },
+                                    "product_type": {
+                                        "required": [
+                                            "id"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "format": "int64",
+                                                "example": 1
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Product created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get a product by its ID",
+                "description": "Retrieves a product using its unique ID.",
+                "operationId": "e7106b7489369309bdae85fbb5409fb7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The unique identifier of the product.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update an existing product",
+                "description": "Updates an existing product with the provided ID, using the provided data.",
+                "operationId": "664f8c35fd371a18c6808677fe260fd9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The unique identifier of the product to be updated.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "JSON payload for updating the product",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "example": "cadeira"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 200
+                                    },
+                                    "product_type": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "format": "int64",
+                                                "example": 2
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Delete a product by its ID",
+                "description": "Deletes a product from the database using its unique ID.",
+                "operationId": "927fdb4b6116f88b58228d89dfc6d719",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The unique identifier of the product to be deleted.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Product deleted successfully"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            }
+        },
+        "/product-types": {
+            "get": {
+                "tags": [
+                    "Product Types"
+                ],
+                "summary": "Get all product types",
+                "description": "Retrieves a list of all product types available in the database.",
+                "operationId": "3c9d5f07cbf42b5bc8f8c6333ab4d6e2",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProductType"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Product Types"
+                ],
+                "summary": "Create a new product type",
+                "description": "Adds a new product type to the database with the provided data.",
+                "operationId": "0efb1e800b5651b62a6e28f9622a4ce9",
+                "requestBody": {
+                    "description": "JSON payload for creating a new product type",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "description",
+                                    "tax"
+                                ],
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Electronics"
+                                    },
+                                    "tax": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 15
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Product type created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductType"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/product-types/{id}": {
+            "get": {
+                "tags": [
+                    "Product Types"
+                ],
+                "summary": "Get a product type by ID",
+                "description": "Retrieves a specific product type by its unique ID.",
+                "operationId": "b2f135e181b6b020d4ab9d0ae4f3f687",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The unique identifier of the product type to be retrieved.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product type not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Product Types"
+                ],
+                "summary": "Update an existing product type",
+                "description": "Updates an existing product type with the provided ID, using the provided data.",
+                "operationId": "71a47aff9ad36af2c802c1e8a7ced3f4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The unique identifier of the product type to be updated.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "JSON payload for updating the product type",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Electronics"
+                                    },
+                                    "tax": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 20
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product type updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product type not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Product Types"
+                ],
+                "summary": "Delete a product by its ID",
+                "description": "Deletes a product from the database using its unique ID.",
+                "operationId": "b495f3c90b89eadd01c4d8bf095eb76b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The unique identifier of the product to be deleted.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Product Type deleted successfully"
+                    },
+                    "404": {
+                        "description": "Product Type not found"
+                    }
+                }
+            }
+        },
+        "/sales": {
+            "get": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Retrieve all sales",
+                "description": "Returns a list of all sales, including detailed item and product information.",
+                "operationId": "7587c0ac88359ce74e823e16aa43df77",
+                "responses": {
+                    "200": {
+                        "description": "List of sales",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Sale"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Create a new sale",
+                "description": "Creates a new sale with multiple products.",
+                "operationId": "68bfe9d1b8ae759d4f289ff4b480e995",
+                "requestBody": {
+                    "description": "Payload for creating a new sale",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "products"
+                                ],
+                                "properties": {
+                                    "products": {
+                                        "description": "List of products and their quantities",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "quantity",
+                                                "product_id"
+                                            ],
+                                            "properties": {
+                                                "quantity": {
+                                                    "description": "The quantity of the product",
+                                                    "type": "integer",
+                                                    "format": "int32",
+                                                    "example": 2
+                                                },
+                                                "product_id": {
+                                                    "description": "The unique identifier of the product",
+                                                    "type": "integer",
+                                                    "format": "int64",
+                                                    "example": 4
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Sale created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sale created successfully"
+                                        },
+                                        "sale": {
+                                            "$ref": "#/components/schemas/Sale"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input, object invalid"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/sales/{id}": {
+            "get": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Get a sale by ID",
+                "description": "Retrieves detailed information about a specific sale by sale ID.",
+                "operationId": "05ed8f72b48a424080e3e52db5e9c459",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The unique identifier of the sale",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detailed information about the sale",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "The unique identifier for the sale",
+                                            "type": "integer",
+                                            "format": "int64",
+                                            "example": 18
+                                        },
+                                        "items": {
+                                            "description": "List of items in the sale",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/SaleItem"
+                                            }
+                                        },
+                                        "total_amount": {
+                                            "description": "Total amount of the sale",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 750
+                                        },
+                                        "total_tax": {
+                                            "description": "Total tax collected for the sale",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 75
+                                        },
+                                        "created_at": {
+                                            "description": "Creation date of the sale",
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2024-04-12T16:53:34Z"
+                                        },
+                                        "updated_at": {
+                                            "description": "Last update date of the sale",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "deleted_at": {
+                                            "description": "Deletion date of the sale, if applicable",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Sale not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Product": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 4
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "mouse gammer"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 150
+                    },
+                    "ean": {
+                        "type": "string",
+                        "example": "AB12345678910"
+                    },
+                    "purchase_price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 75
+                    },
+                    "sales_margin": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 100
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 150
+                    },
+                    "minimum_quantity": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 10
+                    },
+                    "product_type": {
+                        "$ref": "#/components/schemas/ProductType"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-12T00:02:25Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductType": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "informatica"
+                    },
+                    "tax": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 10
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-11T22:30:11Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Sale": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 18
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SaleItem"
+                        }
+                    },
+                    "total_amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 750
+                    },
+                    "total_tax": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 75
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-12T16:53:34Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "SaleItem": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 5
+                    },
+                    "product": {
+                        "$ref": "#/components/schemas/Product"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "price_per_unit": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 150
+                    },
+                    "tax_per_unit": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 15
+                    },
+                    "total_price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 300
+                    },
+                    "total_tax": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 30
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-12T16:53:34Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}

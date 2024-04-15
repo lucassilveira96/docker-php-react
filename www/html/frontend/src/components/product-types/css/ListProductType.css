@@ -1,0 +1,85 @@
+/* ListProduct.css */
+.container {
+    max-width: 1300px;
+    margin: auto;
+  }
+  
+  .table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+  }
+  
+  thead.thead-dark th {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+  }
+  
+  .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .page-link {
+    color: #007bff;
+  }
+  
+  .page-link:hover {
+    color: #0056b3;
+  }
+  
+  .input-group {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    padding: 0.375rem 0.75rem; /* Bootstrap padding, adjust as needed */
+  }
+  
+  .btn-sm {
+    font-size: 0.875rem; /* Smaller button size */
+  }
+  
+  .btn .fa-icon {
+    margin-right: 0; /* Remove margin if any */
+  }
+  
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 500px;
+  }
+  

@@ -1,0 +1,75 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    volumes:
+      - '../www/html/api:/var/www/html/api'
+    depends_on:
+      - db
+      - db_test
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=db_name
+      - DB_USERNAME=db_user
+      - DB_PASSWORD=db_password
+      - PHP_INI_MEMORY_LIMIT=256M
+      - DB_TEST_DATABASE=db_name_test
+      - DB_TEST_USERNAME=db_user
+      - DB_TEST_PASSWORD=db_password
+    networks:
+      - default
+
+  db:
+    image: mysql:8.0
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_DATABASE=db_name
+      - MYSQL_ROOT_PASSWORD=db_password
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_password
+    volumes:
+      - '../database/mysql:/var/lib/mysql'
+      - '../database/logs:/var/log/mysql'
+      - ../database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - default
+
+  db_test:
+    image: mysql:8.0
+    ports:
+      - '3307:3306' # Alterado para '3306:3306' para usar a mesma porta
+    environment:
+      - MYSQL_DATABASE=db_name_test
+      - MYSQL_ROOT_PASSWORD=db_password
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_password
+    volumes:
+      - '../database/mysql_test:/var/lib/mysql'
+    networks:
+      - default
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: 'phpmyadmin'
+    ports:
+      - '8085:80'
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: db_user
+      PMA_PASSWORD: db_password
+    networks:
+      - default
+    depends_on:
+      - db
+
+networks:
+  default:
+    driver: bridge

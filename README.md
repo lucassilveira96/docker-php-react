@@ -42,3 +42,7 @@ docker-compose up -d
 ## Documentação da API
 
 A documentação da API está disponível em Swagger. Consulte os endpoints, parâmetros e respostas disponíveis em: [http://localhost:8080/documentation/dist/#/](http://localhost:8080/documentation/dist/#/).
+
+## Testes
+
+Para os testes foi criado um conatiner de banco de teste separeado, para que ao efetuar os testes antes de rodar o servidor local os mesmos sejam executados. A diferenciação de base esta configurada no arquivo connection na api.

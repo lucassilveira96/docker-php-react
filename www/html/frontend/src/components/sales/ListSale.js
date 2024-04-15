@@ -1,4 +1,3 @@
-// Importe useState para usar estados no componente
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,12 +43,6 @@ const ListSale = () => {
     setShowDeleteModal(true);
   };
 
-  const openViewModal = (sale) => {
-    setSelectedSale(sale);
-    setViewModalOpen(true);
-    console.log(sale,selectedSale)
-  };
-
   const closeViewModal = () => {
     setViewModalOpen(false);
     setSelectedSale(null);
@@ -62,11 +55,16 @@ const ListSale = () => {
           const updatedSales = sales.filter(p => p.id !== saleToDelete.id);
           setSales(updatedSales);
           setFilteredSales(updatedSales);
-          //closeDeleteModal();
-          toast.success("Tipo de Produto deletado com sucesso");
+          closeDeleteModal();
+          toast.success("Venda deletada com sucesso");
         })
         .catch(error => console.error('Failed to delete sale:', error));
     }
+  };
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+    setSaleToDelete(null);
   };
 
   const pageCount = Math.ceil(filteredSales.length / salesPerPage);
@@ -101,16 +99,7 @@ const ListSale = () => {
         </div>
       </div>
       <div className="input-group mb-3">
-        <div className="col-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar Cliente"
-            value={search}
-            onChange={handleSearchChange}
-          />
-        </div>
-        <div className="col-8 d-flex justify-content-end">
+        <div className="col d-flex justify-content-end">
           <Link to="/sales/new" className="btn btn-success">Adicionar</Link>
         </div>
       </div>
@@ -119,8 +108,6 @@ const ListSale = () => {
           <thead className="thead-dark">
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Descrição</th>
-              <th scope="col">Tipo do Produto</th>
               <th scope="col">Preço</th>
               <th scope="col">Impostos</th>
               <th scope="col">Data Criação</th>
@@ -130,8 +117,6 @@ const ListSale = () => {
           <tbody>
             {currentItems.map(sale => (
               <tr key={sale.id}>
-                <td>{sale.id}</td>
-                <td>{sale.id}</td>
                 <td>{sale.id}</td>
                 <td>R$ {sale.total_amount}</td>
                 <td>R$ {sale.total_tax}</td>

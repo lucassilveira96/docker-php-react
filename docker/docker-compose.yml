@@ -44,7 +44,7 @@ services:
   db_test:
     image: mysql:8.0
     ports:
-      - '3307:3306' # Alterado para '3306:3306' para usar a mesma porta
+      - '3307:3306'
     environment:
       - MYSQL_DATABASE=db_name_test
       - MYSQL_ROOT_PASSWORD=db_password
@@ -69,6 +69,20 @@ services:
       - default
     depends_on:
       - db
+  
+  react-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.react
+    ports:
+      - '3000:3000'
+    volumes:
+      - '../www/html/frontend:/var/www/html/frontend'
+    depends_on:
+      - app
+    networks:
+      - default
+    command: yarn start
 
 networks:
   default:

@@ -24,7 +24,7 @@ const ListProductType = () => {
         setFilteredProductTypes(response.data.data);
       })
       .catch(error => console.error('Error fetching productTypes:', error));
-  }, []); // Dispara apenas uma vez na montagem do componente
+  }, []); 
 
   useEffect(() => {
     const lowercasedValue = search.toLowerCase();
@@ -33,7 +33,7 @@ const ListProductType = () => {
     );
     setFilteredProductTypes(filtered);
     setCurrentPage(0);
-  }, [search, productTypes]); // Dispara quando a variável 'search' ou 'productTypes' mudar
+  }, [search, productTypes]);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -150,7 +150,7 @@ const ListProductType = () => {
               <h5>Confirmação de Exclusão</h5>
             </center>
             <center>
-              <p>Deseja Excluir o produto: {productTypeToDelete.description}?</p>
+              <p>Deseja Excluir o tipo produto: {productTypeToDelete.description}?</p>
             </center>
             <button className="btn btn-danger" onClick={confirmDelete}>
               Deletar

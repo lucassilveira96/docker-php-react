@@ -17,6 +17,7 @@ use App\Controllers\ProductType\{
     UpdateProductTypeController
 };
 use App\Controllers\Sale\CreateSaleController;
+use App\Controllers\Sale\DeleteSaleController;
 use App\Controllers\Sale\GetAllSalesController;
 use App\Controllers\Sale\GetOneSaleController;
 use App\Helpers\Response;
@@ -142,14 +143,10 @@ class Router
                         $controller = new GetOneSaleController();
                         $controller->__invoke($saleId);
                         break;
-                    // case 'PUT':
-                    //     $controller = new UpdateProductTypeController();
-                    //     $controller->__invoke($productTypeId);
-                    //     break;
-                    // case 'DELETE':
-                    //     $controller = new DeleteProductTypeController();
-                    //     $controller->__invoke($productTypeId);
-                    //     break;
+                    case 'DELETE':
+                        $controller = new DeleteSaleController();
+                        $controller->__invoke($saleId);
+                        break;
                     default:
                         Response::json(
                             Response::HTTP_BAD_REQUEST,

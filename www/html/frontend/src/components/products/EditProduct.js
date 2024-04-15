@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const EditProduct = () => {
-    const { id } = useParams(); // Captura o ID do produto da URL
+    const { id } = useParams(); 
     const [product, setProduct] = useState({
         description: '',
         price: 0,
@@ -86,8 +86,6 @@ const EditProduct = () => {
         setProduct({ ...product, [name]: updatedValue });
     };
 
-
-    // Função para lidar com o envio do formulário de edição
     const handleSubmit = e => {
         e.preventDefault();
         if (product.purchase_price <= 0 || product.price <= 0 || product.sales_margin <= 0 || product.quantity <= 0) {

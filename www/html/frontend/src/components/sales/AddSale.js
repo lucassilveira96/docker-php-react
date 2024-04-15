@@ -23,22 +23,6 @@ const AddSale = () => {
       .catch(error => console.error('Error fetching products:', error));
   }, []);
 
-  const handleAddToCart = (product) => {
-    const itemIndex = cart.findIndex(item => item.product_id === product.id);
-    if (itemIndex !== -1) {
-      const updatedCart = [...cart];
-      updatedCart[itemIndex].quantity += 1;
-      setCart(updatedCart);
-    } else {
-      const item = {
-        quantity: parseInt(quantity),
-        product_id: product.id
-      };
-      setCart([...cart, item]);
-    }
-    setQuantity(1);
-  };
-
   const clearScreen = () => {
     setCart([]);
     setQuantity(1);
@@ -67,11 +51,11 @@ const AddSale = () => {
       const itemIndex = cart.findIndex(item => item.product_id === product.id);
       if (itemIndex !== -1) {
         const updatedCart = [...cart];
-        updatedCart[itemIndex].quantity += parseInt(quantity); // Usando o valor de quantity
+        updatedCart[itemIndex].quantity += parseInt(quantity);
         setCart(updatedCart);
       } else {
         const item = {
-          quantity: parseInt(quantity), // Usando o valor de quantity
+          quantity: parseInt(quantity), 
           product_id: product.id
         };
         setCart([...cart, item]);
@@ -117,7 +101,21 @@ const AddSale = () => {
   };
 
   const handleValueReceivedChange = (e) => {
-    setValueReceived(e.target.value);
+    const receivedValue = e.target.value;
+    setValueReceived(receivedValue);
+    
+    if (!isNaN(receivedValue) && receivedValue !== '') {
+      const totalPrice = getTotalPrice();
+      const received = parseFloat(receivedValue);
+      if (received >= totalPrice) {
+        const changeValue = received - totalPrice;
+        setChange(changeValue.toFixed(2));
+      } else {
+        setChange(0);
+      }
+    } else {
+      setChange(0);
+    }
   };
 
   const handleQuantityChange = (value) => {

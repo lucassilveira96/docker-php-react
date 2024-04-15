@@ -24,7 +24,7 @@ const ListProduct = () => {
         setFilteredProducts(response.data.data);
       })
       .catch(error => console.error('Error fetching products:', error));
-  }, []); // Dispara apenas uma vez na montagem do componente
+  }, []);
 
   useEffect(() => {
     const lowercasedValue = search.toLowerCase();
@@ -33,7 +33,7 @@ const ListProduct = () => {
     );
     setFilteredProducts(filtered);
     setCurrentPage(0);
-  }, [search, products]); // Dispara quando a variável 'search' ou 'products' mudar
+  }, [search, products]);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);

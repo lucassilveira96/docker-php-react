@@ -3,13 +3,6 @@ import './css/ViewSale.css'
 import { getSaleById } from '../../services/saleService';
 import { useParams, useNavigate } from 'react-router-dom';
 
-// This component renders a barcode placeholder. You should replace it with a real barcode component if necessary.
-const BarcodePlaceholder = () => <div className="barcode-placeholder">Barcode Placeholder</div>;
-
-// This component renders a QR code placeholder. You should replace it with a real QR code component if necessary.
-const QRCodePlaceholder = () => <div className="qr-code-placeholder">QR Code Placeholder</div>;
-
-// The main ViewSale component
 const ViewSale = ({ saleId }) => {
   const [viewSaleData, setViewSaleData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,7 +18,7 @@ const ViewSale = ({ saleId }) => {
         getSaleById(id)
           .then(response => {
             if (response.data.data === null) {
-              //navigate('/products');
+              navigate('/products');
             }
             setViewSaleData(response.data.data);
             console.log(response.data.data)
@@ -50,7 +43,6 @@ const ViewSale = ({ saleId }) => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  // Make sure ViewSaleData is not null before trying to access its properties
   if (!viewSaleData) return null;
 
   return (

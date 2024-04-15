@@ -41,3 +41,5 @@ CMD cd /var/www/html/api \
      && ./vendor/bin/openapi --output swagger.json src \
      && ./vendor/bin/phpunit tests \
      && cd public/ && php -S 0.0.0.0:8080
+
+EXPOSE 8080

@@ -35,8 +35,6 @@ services:
       - MYSQL_USER=db_user
       - MYSQL_PASSWORD=db_password
     volumes:
-      - '../database/mysql:/var/lib/mysql'
-      - '../database/logs:/var/log/mysql'
       - ../database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - default
@@ -51,7 +49,7 @@ services:
       - MYSQL_USER=db_user
       - MYSQL_PASSWORD=db_password
     volumes:
-      - '../database/mysql_test:/var/lib/mysql'
+      - ../database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - default
 

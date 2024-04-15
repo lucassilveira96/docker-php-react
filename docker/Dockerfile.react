@@ -8,10 +8,10 @@ WORKDIR /var/www/html/frontend
 COPY . .
 
 # Instalando as dependências do projeto
-RUN yarn
+RUN npm install
 
 # Comando padrão a ser executado quando o contêiner for iniciado
-CMD ["yarn", "build"]
+CMD ["npm", "start"]
 
 # Expondo a porta 3000 (se necessário)
 EXPOSE 3000

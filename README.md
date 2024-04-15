@@ -30,7 +30,7 @@ docker-compose up -d
 - **API Backend**: [http://localhost:8080](http://localhost:8080)
 - **Documentação Swagger**: [http://localhost:8080/documentation/dist/#/](http://localhost:8080/documentation/dist/#/)
 - **Frontend**: [http://localhost:3000](http://localhost:3000)
-- **PHPMYADMIN**: [http://localhost:8080](http://localhost:8085)
+- **PHPMYADMIN**: [http://localhost:8085](http://localhost:8085)
 
 ## Estrutura do Projeto
 

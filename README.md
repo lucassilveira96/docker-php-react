@@ -45,4 +45,4 @@ A documentação da API está disponível em Swagger. Consulte os endpoints, par
 
 ## Testes
 
-Para os testes foi criado um conatiner de banco de teste separeado, para que ao efetuar os testes antes de rodar o servidor local os mesmos sejam executados. A diferenciação de base esta configurada no arquivo connection na api.
+Para os testes foi criado um container de banco de teste separeado, para que ao efetuar os testes antes de rodar o servidor local os mesmos sejam executados. A diferenciação de base esta configurada no arquivo connection na api.

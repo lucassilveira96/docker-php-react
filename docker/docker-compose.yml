@@ -67,20 +67,18 @@ services:
       - default
     depends_on:
       - db
-  
+
   react-app:
-    build:
-      context: .
-      dockerfile: Dockerfile.react
-    ports:
-      - '3000:3000'
+    image: node:14.21.3
     volumes:
-      - '../www/html/frontend:/var/www/html/frontend'
-    depends_on:
-      - app
+      - '../www/html/frontend/build:/app'  
+    ports:
+      - "3000:3000"
     networks:
       - default
-    command: yarn start
+    depends_on:
+      - app
+    command: ["npx", "serve", "-s", "/app", "-l", "3000"]  
 
 networks:
   default:
